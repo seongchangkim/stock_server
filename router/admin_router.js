@@ -9,7 +9,6 @@ const upload = multar({ dest: uploadPath });
 // 관리자 페이지 회원 목록
 router.get("/users/list", async (req, res) => {
     try {
-        // console.log("list!!");
         const startIndex = (req.query.page - 1) * 10;
         const endIndex = req.query.page * 10;
         var dataList = await User.findAll({ 
@@ -23,17 +22,13 @@ router.get("/users/list", async (req, res) => {
         var userList = [];
         
         for(var data of dataList){
-            // Object.keys(data.dataValues).forEach((keys) => {
-            // console.log(`key : ${keys}`);
-            // console.log(`value : ${data.dataValues[keys]}`);
-            // });
             userList.push(data.dataValues); 
         }
     
         const getTotalCount = await User.count();
 
         const totalPage = Math.ceil(getTotalCount/10.0);
-        // console.log(`list : ${userList.length}`);
+        
         return res.status(200).send({
             success: true,
             userList: userList,
@@ -68,8 +63,6 @@ router.get("/user/detail", async (req, res) => {
 router.patch("/user/edit", upload.single('profile_image') ,async (req, res) => {
     try {
         let today = new Date();
-        // console.log(`upload file : ${req.file}`);
-        // console.log(`req : ${req.body.tel}`); 
         
         await User.update({ 
             profile_image: req.body.profile_image,
@@ -93,9 +86,6 @@ router.patch("/user/edit", upload.single('profile_image') ,async (req, res) => {
             success: true,
         });
     } catch (err) {
-        // Object.keys(err).forEach((keys) => {
-        //     console.log(`err : ${err[keys]}`);
-        // })
         return res.json({
             success: false,
             err,
@@ -106,15 +96,6 @@ router.patch("/user/edit", upload.single('profile_image') ,async (req, res) => {
 // 관리자 페이지 회원 삭제 및 회원 탈퇴
 router.delete("/user/leave", async (req, res) => {
     try {
-        // Object.keys(req.body).forEach((keys) => {
-        //     console.log(`key : ${keys}`);
-        //     console.log(`value : ${req.body[keys]}`);
-        // });
-
-        // console.log(`value : ${req.body.ids}`);
-
-        // console.log(`type : ${typeof req.body.ids}`)
-
         if(typeof req.body.ids === 'string'){
             var id = req.body.ids.slice(1, req.body.ids.indexOf(']'));
 
@@ -133,7 +114,6 @@ router.delete("/user/leave", async (req, res) => {
             var ids = `${req.body.ids}`.split(',');
 
             ids.forEach(async (id) => {
-                console.log(`id : ${id}`);
                 await User.destroy({ 
                         where: { 
                             id: id
@@ -152,9 +132,6 @@ router.delete("/user/leave", async (req, res) => {
             success: true,
         });
     } catch (err) {
-        // Object.keys(err).forEach((keys) => {
-        //     console.log(`err : ${err[keys]}`);
-        // })
         return res.json({
             success: false,
             err,

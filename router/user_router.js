@@ -12,7 +12,6 @@ const uuidToHex = require("uuid-to-hex");
 
 // 회원가입
 router.post("/register", async function (req, res) {
-    // console.log(req.body);
 
     const hash = User.generateBcrypt(req.body.password);
 
@@ -26,16 +25,14 @@ router.post("/register", async function (req, res) {
         });
 
         await Auth.create({ auth_id: user.id, role: 0 })
-            .then(() => console.log("success"))
             .catch((err) => {
-            return res.json({ success: false, err });
+                return res.json({ success: false, err });
             });
 
         return res.status(200).json({
             success: true,
         });
     } catch (err) {
-        // console.log(err);
         return res.json({ success: false, err });
     }
 });
@@ -53,8 +50,6 @@ router.post("/login", async function (req, res) {
 
     let isMatch = User.compareBcrypt(req.body.password, user.password);
 
-    // console.log(`bool1 : ${isMatch}`);
-
     if (!isMatch) {
         return res.json({
             loginSuccess: false,
@@ -63,7 +58,6 @@ router.post("/login", async function (req, res) {
     }
 
     try {
-        // console.log(`userId : ${user.id}`);
         const token = jwt.sign({ token: uuidToHex(user.id) }, "secretToken", {
             expiresIn: "1d",
         });
@@ -115,12 +109,8 @@ router.post("/logout", async (req, res) => {
             secure: true,
             sameSite: "none",
         });
-        console.log("logout end");
         return res.end();
         
-        // return res.status(200).send({
-        //   success: true,
-        // });
     } catch (err) {
         return res.json({
             success: false,
@@ -149,11 +139,7 @@ router.get("/profile/show", async (req, res) => {
 // 회원 프로필 수정
 router.patch("/profile/edit", upload.single('profile_image') ,async (req, res) => {
     try {
-        let today = new Date();
-        // console.log(`upload file : ${req.file}`);
-        // console.log(`tel : ${req.body.tel}`);
-        // console.log(`name : ${req.body.name}`); 
-        // console.log(`profile_image : ${req.body.profile_image}`);  
+        let today = new Date(); 
         
         await User.update({ 
             profile_image: req.body.profile_image,

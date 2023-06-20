@@ -1,6 +1,3 @@
-const { Sequelize, DataTypes } = require('sequelize')
-const sequelize = new Sequelize('mysql:memory:')
-
 module.exports = (sequelize, DataTypes) => {
     const _stock = sequelize.define('Port', {
         port_index : {

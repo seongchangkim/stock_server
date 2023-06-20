@@ -53,12 +53,6 @@ router.post("/portfolio/create", async(req, res) => {
         ratio = ratioStr.split(',');
       }
       
-      // console.log(`req stock : ${stock}`);
-      // console.log(`req stock type : ${typeof stock}`);
-      // console.log(`req ratio : ${ratio}`);
-      // console.log(`req ratio type : ${typeof ratio}`);
-      // console.log(`req stock : ${stock}`);
-
       for(let i = 0; i< ratio.length; i++){
         ratio[i] *= 1; 
       }
@@ -90,7 +84,6 @@ router.post("/portfolio/create", async(req, res) => {
 
 // 주식 포트폴리오 목록 가져오기
 router.get("/portfolio/list", async (req, res) =>{
-    // console.log(`per : ${req.query.per}`);
     const count = req.query.per === undefined ? 10 : req.query.per *1
     const startIndex = (req.query.page - 1) * count;
     const endIndex = req.query.page * count;
@@ -128,14 +121,13 @@ router.get("/portfolio/list", async (req, res) =>{
         totalPage : totalPage
       });
     }catch(e){
-      // console.log(`e : ${e}`);
       return res.json({
         success: false
       })
     }
 });
 
-// 주식 포트폴리오 상세보기
+// 주식 포트폴리오 상세보기s
 router.get("/portfolio/detail", async (req, res) =>{
   try{
     const portIndex = req.query.portIndex * 1;
@@ -151,7 +143,6 @@ router.get("/portfolio/detail", async (req, res) =>{
       portInfo : data.dataValues
     });
   }catch(e){
-    // console.log(`e : ${e}`);
     return res.json({
       success: false
     })
@@ -223,9 +214,8 @@ router.patch("/portfolio/edit", async(req, res) => {
       
     res.status(200).json({
       success: true,
-    })
+    });
   }catch(e){
-    console.log(`e: ${e}`);
     res.json({
       success: false,
       message: "관리자에게 문의하세요!"
@@ -235,12 +225,6 @@ router.patch("/portfolio/edit", async(req, res) => {
 
 // 주식 포트폴리오 삭제
 router.delete("/portfolio/delete", async (req, res) =>{
-  // Object.keys(req).forEach((keys) => {
-  //   console.log(`key : ${keys}`);
-  //   console.log(`value : ${req.keys}`);
-  // });
-
-  // console.log(`index : ${req.body}`);
 
   try{
     await Port.destroy({
@@ -259,7 +243,6 @@ router.delete("/portfolio/delete", async (req, res) =>{
       success: true,
     });
   }catch(e){
-    // console.log(`e : ${e}`);
     return res.json({
       success: false
     })
