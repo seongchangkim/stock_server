@@ -17,33 +17,33 @@ stock_app 애플리케이션의 백엔드 포트폴리오이면서 stock_app과 
 
 ## API 소개
 ### 1. User API
-|Url|Http Method|Parameter
-|:---|:---:|:---|
-|/api/user/register|POST|○ email(String)<br/> ○ password(String)<br/> ○ name(String)<br/> ○ tel(String)<br/>
-|/api/user/login|POST| ○ email(String)<br/> ○ password(String)<br/>
-|/api/user/auth|GET| ○ id(UUID)<br/> ○ email(String)<br/> ○ name(String)<br/> ○ tel(String)<br/> ○ profile_image(String)<br/> ○ role(Integer)<br/>
-|/api/user/logout|POST| ○ userId(UUID)
-|/api/user/profile/show|GET| ○ id(UUID)
-|/api/user/profile/edit|PATCH| ○ id(UUID)<br/> ○ profile_image(String)<br/> ○ name(String)<br/> ○ tel(String)<br/>
+|Url|Http Method|기능|Parameter
+|:---|:---:|:---:|:---|
+|/api/user/register|POST|회원가입|○ email(String)<br/> ○ password(String)<br/> ○ name(String)<br/> ○ tel(String)<br/>
+|/api/user/login|POST|로그인| ○ email(String)<br/> ○ password(String)<br/>
+|/api/user/auth|GET|로그인 여부| ○ id(UUID)<br/> ○ email(String)<br/> ○ name(String)<br/> ○ tel(String)<br/> ○ profile_image(String)<br/> ○ role(Integer)<br/>
+|/api/user/logout|POST|로그아웃| ○ userId(UUID)
+|/api/user/profile/show|GET|프로필 상세보기| ○ id(UUID)
+|/api/user/profile/edit|PATCH|프로필 수정| ○ id(UUID)<br/> ○ profile_image(String)<br/> ○ name(String)<br/> ○ tel(String)<br/>
 <br/>
 
 ### 2. Admin API
-|Url|Http Method|Parameter
-|:---|:---:|:---|
-|/api/admin/users/list|GET| ○ page(String)<br/> ex) page:"1"
-|/api/admin/user/detail|GET| ○ id(UUID)
-|/api/admin/user/edit|PATCH| ○ id(UUID)<br/> ○ profile_image(String)<br/> ○ name(String)<br/> ○ tel(String)<br/> ○ role(Integer)<br/>
-|/api/admin/user/leave|DELETE|○ ids(String)<br/> ex) ids:"['UUID']"
+|Url|Http Method|기능|Parameter
+|:---|:---:|:---:|:---|
+|/api/admin/users/list|GET|회원 목록(페이징 처리 및 검색)| ○ page(String)<br/> ex) page:"1"
+|/api/admin/user/detail|GET|회원 상세보기| ○ id(UUID)
+|/api/admin/user/edit|PATCH|회원 수정| ○ id(UUID)<br/> ○ profile_image(String)<br/> ○ name(String)<br/> ○ tel(String)<br/> ○ role(Integer)<br/>
+|/api/admin/user/leave|DELETE|회원 탈퇴 또는 회원 삭제|○ ids(String)<br/> ex) ids:"['UUID']"
 <br/>
 
-### 3. Stock Portfolio API
-|Url|Http Method|Parameter
-|:---|:---:|:---|
-|/api/stock/portfolio/create|POST| ○ initialPrice(String)<br/> ex)initialPrice:"100"<br/> ○ userId(UUID)<br/> ○ stock(String)<br/> ex) stock:"['SPLG','O','','','','','','','','']"<br/> ○ ratio(String)<br/> ex) ratio:"['50','50','0','0','0','0','0','0','0','0']"<br/> ○ title(String)<br/> ○ writer(String)
-|/api/stock/portfolio/list|GET|○ id(UUID)<br/> ○ per(String)<br/> ex) per:10"<br/> ○ page(String)<br/> page:"1"
-|/api/stock/portfolio/detail|GET|○ portIndex(String)<br/> ex) portIndex:"10"<br/>
-|/api/stock/portfolio/edit|PATCH|○ initialPrice(String)<br/> ex)initialPrice:"100"<br/> ○ portIndex(String)<br/> ex) portIndex:"10"<br/> ○ stock(String)<br/> ex) stock:"['SPLG','O','','','','','','','','']"<br/> ○ ratio(String)<br/> ex) ratio:"['50','50','0','0','0','0','0','0','0','0']"<br/> ○ title(String)
-|/api/stock/portfolio/delete|DELETE| ○ portIndex(String)<br/> ex) portIndex:"10"
+### 3. Assets Portfolio API
+|Url|Http Method|기능|Parameter
+|:---|:---:|:---:|:---|
+|/api/stock/portfolio/create|POST|자산 포트폴리오 생성| ○ initialPrice(String)<br/> ex)initialPrice:"100"<br/> ○ userId(UUID)<br/> ○ stock(String)<br/> ex) stock:"['SPLG','O','','','','','','','','']"<br/> ○ ratio(String)<br/> ex) ratio:"['50','50','0','0','0','0','0','0','0','0']"<br/> ○ title(String)<br/> ○ writer(String)
+|/api/stock/portfolio/list|GET|자산 포트폴리오 목록(페이지 처리)|○ id(UUID)<br/> ○ per(String)<br/> ex) per:10"<br/> ○ page(String)<br/> page:"1"
+|/api/stock/portfolio/detail|GET|자산 포트폴리오 상세보기|○ portIndex(String)<br/> ex) portIndex:"10"<br/>
+|/api/stock/portfolio/edit|PATCH|자산 포트폴리오 수정|○ initialPrice(String)<br/> ex)initialPrice:"100"<br/> ○ portIndex(String)<br/> ex) portIndex:"10"<br/> ○ stock(String)<br/> ex) stock:"['SPLG','O','','','','','','','','']"<br/> ○ ratio(String)<br/> ex) ratio:"['50','50','0','0','0','0','0','0','0','0']"<br/> ○ title(String)
+|/api/stock/portfolio/delete|DELETE|자산 포트폴리오 삭제| ○ portIndex(String)<br/> ex) portIndex:"10"
 <br/>
 
 ※ 속성이 email이고 데이터 타입이 String이면 email(String)으로 작성했습니다.
